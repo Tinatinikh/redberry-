@@ -1,0 +1,147 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style/style.css">
+</head>
+<style>
+    .dropbtn {
+        background-color:255, 255, 255, 1e-06;
+        color: #212529;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+        width: 391px;
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+        width: 350px;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 391px;
+        box-shadow: 0px 8px 16px 
+            0px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+    }
+
+    .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+    .dropdown-content a:hover {
+        background-color: #f1f1f1
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .dropdown:hover .dropbtn {
+        background-color: 255, 255, 255;
+    }
+
+    ul {
+    list-style: none;
+    padding: 0;
+}
+li{
+    width: 200px;
+    border: 1px solid;
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+</style>
+<body>
+    <div class="dropdown">
+        <button class="dropbtn">
+           Choose your character
+        </button>
+        <Ul id="id"></Ul>
+        <ul id="name"></ul>
+        <ul id="image"></ul>
+          
+    </div>
+</center>
+
+
+</body>
+
+
+<script>
+    fetch ("https://chess-tournament-api.devtest.ge/api/grandmasters ", {
+        method : 'GET' ,
+        headers : {
+            'content-Type' : 'application/JSON'
+        }
+    })
+
+    .then(function(response){
+        if(response.status !== 200){
+        throw 'error'; 
+        }
+        return response.json();
+    })
+
+    .then(function(responseData){
+        console.log(responseData.data);
+        responseData.data.forEach(item => {
+          let button = document.createElement('button');
+          button.textContent = item.name;
+          let list = document.getElementById('id');
+          list.appendChild(button)
+
+        });
+
+        responseData.data.forEach( item => {
+         let button = document.createElement('button');
+          button.textContent = item.name;
+          let list = document.getElementById('name');
+          list.appendChild(button)
+
+        });
+
+        responseData.data.forEach( item => {
+         let button = document.createElement('button');
+          button.textContent = item.name;
+          let list = document.getElementById('image');
+          list.appendChild(button)
+
+        });
+   
+     
+    })
+
+    .catch(function(error){
+            
+            var div = document.getElementById('errormessage')
+            div.style.textAlign = "center"
+
+            var image = document.createElement('img')
+            image.setAttribute('src', "error.png")
+            div.appendChild(image)
+            
+           if (responseData !==200) {
+            
+            throw 'error'; 
+            
+           } return div.getElementById('errormessage')
+        })
+        
+  </script>
+</html>
+</body>
+</html>

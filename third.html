@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@1,200&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;1,200&family=Open+Sans:wght@300&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orelega+One&family=Roboto:wght@700&family=Square+Peg&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style/style.css">
+    <title>Thirdpage</title>
+
+</head>
+<body>
+    
+    <div class="containerv3">
+        <div class="lftcontent">
+            <header>
+                <div class="header">
+                    <img class="logo" src="images/Vector.png" alt="">
+                    <img class="headertitle" src="images/Redberry Knight Cup.png" alt="">                    
+                </div>
+            </header>
+            <div>
+                <img class="second-page-photo" src="images/4.png" alt="">
+            </div>
+            <div class="second-page-left-title-div">
+                <div>
+                    <h2 class="h2-third">“Many have become chess masters;</h2>
+                </div>
+                <div>
+                    <h2 class="h2-third">no one has become the master of chess.”</h2>
+                </div>
+                <div>
+                    <h3 class="h3-third">- Siegbert Tarrasch</h3>
+                </div>
+            </div>
+        </div>
+        <div class="third-page-right-content">
+            <div class="top-right">
+                <span class="top-right-title">First step is done, continue to finish onboarding</span>
+            </div>
+            <div class="steps">
+                <div class="steps-top">
+                    <div id="one-third">
+                        <img class="sign" src="images/sign.png" alt="">
+                    </div>
+                    <div class="line"></div>
+                    <div id="two">2</div>
+                </div>
+                <div class="steps-bottom">
+                    <span class="personal-information">Personal information</span>
+                    <span class="chess-experience">Chess experience</span>
+                </div>
+            </div>
+
+            <div class="div-info">
+                <p class="personal-info">Chess experience</p>
+                <p class="basic-info">This is basic informaton fields</p>
+            </div>
+
+            <div class="choose">
+                <div id="knowledge">
+                    <select name="knowledge" id="select">
+                     
+                     <option value="0" required  id="level"> level of knowledge * </option>
+                     <option value="1" id="beginner">Begginer</option>
+                     <option value="2" id="intermediate">Intermediate</option>
+                     <option value="3" id="professional">Professional</option>
+                    </select>
+                </div>
+                       
+                <div id="choose-right" >
+                    <button id="character-btn" onclick="dropdown()">Choose your character *
+                    <img class="arr" src="images/arr.png" alt=""></button>
+                    <div class="app">
+                        <ul id="app-list"></ul>
+                    </div>
+                </div> 
+            </div>   
+            <div class="participate-div">
+                <img class="participate-txt" src="images/participate.png" alt="">
+                <div class="yes-no">
+                    <input id="yes" type="radio" name="choose" value="yes">
+                    <label for="">Yes</label>
+                    <input id="no" type="radio" name="choose" value="no">
+                    <label for="">No</label>
+                </div>
+            </div>
+            <div class="buttons">
+                <div class="btn-back">
+                    <a class="back-a" href="second.html"><button class="back">Back</button></a>
+                </div>
+                <div class="btn-next">
+                    <a class="next-a" href=""><button class="next">
+                        <img class="img-next" src="images/next.png" alt="">
+                        <img class="img-arrow" src="images/arrow.png" alt="">
+                    </button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        function dropdown(){
+        fetch('https://chess-tournament-api.devtest.ge/api/grandmasters',{
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/JSON'
+            }
+        })
+        .then(function(response){
+            if(response.status !==200){
+                throw error
+            }
+            return response.json()
+        })
+        .then(function(data){
+            console.log(data);
+            data.forEach(item=> {
+                let li = document.createElement('li')
+                let span = document.createElement('span')
+                span.textContent = item.name 
+                
+                let img = document.createElement('img')
+                let url = 'https://chess-tournament-api.devtest.ge'
+                img.src =url + item.image
+                img.style.width = '25px'
+                img.style.marginRight = '20px'
+                img.style.float = 'right'
+
+                var div = document.querySelector('.app')
+                div.style.display = 'block'
+
+                let list = document.getElementById('app-list')
+                list.style.listStyleType = 'none'
+                list.style.display = 'flex'
+                list.style.flexDirection = 'column'
+                list.style.textAlign = 'start'
+                li.style.marginBottom = '5px'
+                li.style.cursor = "pointer"
+                li.appendChild(span)
+                li.appendChild(img)
+                list.appendChild(li)
+
+                span.addEventListener('click', chooseCharacter)
+                function chooseCharacter(){
+                    if(span.click){
+                        var btn = document.getElementById('character-btn')
+                        btn.innerHTML = span.innerHTML
+                        div.style.display = 'none'
+                    }
+                }
+           
+            });
+        })
+        .catch(function(error){
+            console.log(error)
+        })
+
+    }
+    </script>
+</body>
+</html>
